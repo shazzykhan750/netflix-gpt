@@ -4,6 +4,12 @@
 
 - cdn tailwindcss
 - react-router-dom
+  -Header
+  -routing of app
+  -login form
+  -sign up form
+  -validation
+- useRef hook
 
 # Features
 

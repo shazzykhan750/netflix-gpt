@@ -1,11 +1,26 @@
-import React, { useState } from "react";
+import React, { useRef, useState } from "react";
 import Header from "./Header";
+import { checkValidData } from "../utils/validate";
 
 const Login = () => {
   const [isSignInForm, setIsSignInForm] = useState(true);
+  const [errorMessage, setErrorMessage] = useState(null);
+
+  const email = useRef(null);
+  const password = useRef(null);
 
   const handleSignUp = () => {
     setIsSignInForm((prev) => !prev);
+  };
+  const handleButtonClick = (e) => {
+    e.preventDefault(); // Prevent form submission
+
+    const message = checkValidData(email.current.value, password.current.value);
+    if (message) {
+      setErrorMessage(message);
+      return;
+    }
+    setErrorMessage(null); // Clear error message if validation passes
   };
 
   return (
@@ -36,17 +51,23 @@ const Login = () => {
 
             {/* Common Fields */}
             <input
+              ref={email}
               type="email"
               placeholder="Email"
               className="py-3 px-2 m-2 w-full rounded text-white bg-black/60 border border-white"
             />
             <input
+              ref={password}
               type="password"
               placeholder="Password"
               className="py-3 px-2 m-2 w-full rounded text-white bg-black/60 border border-white"
             />
+            <p className="px-2 font-bold text-red-500">{errorMessage}</p>
 
-            <button className="py-3 m-2 w-full bg-red-600 text-white rounded">
+            <button
+              className="py-3 m-2 w-full bg-red-600 text-white rounded cursor-pointer hover:bg-red-700 transition-all duration-300"
+              onClick={handleButtonClick}
+            >
               {isSignInForm ? "Sign In" : "Sign Up"}
             </button>
 
