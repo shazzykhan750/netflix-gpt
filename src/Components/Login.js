@@ -4,16 +4,21 @@ import { checkValidData } from "../utils/validate";
 import {
   createUserWithEmailAndPassword,
   signInWithEmailAndPassword,
+  updateProfile,
 } from "firebase/auth";
 import { auth } from "../utils/firebase"; // Import the auth object from firebase.js
 import { useNavigate } from "react-router-dom";
+import { useDispatch } from "react-redux";
+import { addUser } from "../utils/userSlice";
 const Login = () => {
   const [isSignInForm, setIsSignInForm] = useState(true);
   const [errorMessage, setErrorMessage] = useState(null);
   const navigate = useNavigate();
+  const dispatch = useDispatch(); // Import useDispatch from react-redux
 
   const email = useRef(null);
   const password = useRef(null);
+  const name = useRef(null); // Ref for the name input field
 
   const handleSignUp = () => {
     setIsSignInForm((prev) => !prev);
@@ -37,7 +42,30 @@ const Login = () => {
         .then((userCredential) => {
           // Signed in
           const user = userCredential.user;
-          navigate("/browser"); // Navigate to the browser page
+          updateProfile(user, {
+            displayName: name.current.value,
+            photoURL:
+              "https://media.licdn.com/dms/image/v2/C5603AQEXrOpkos9m3w/profile-displayphoto-shrink_800_800/profile-displayphoto-shrink_800_800/0/1628265871196?e=1750291200&v=beta&t=oTeMGWGPaEvr8xXOgfx_5AubQHC2ZgPc-txokF7pCvc",
+          })
+            .then(() => {
+              const { uid, email, displayName, photoURL } = auth.currentUser;
+
+              dispatch(
+                addUser({
+                  uid: uid,
+                  email: email,
+                  displayName: displayName,
+                  photoURL: photoURL,
+                })
+                // Navigate to the browser page
+              );
+              navigate("/browser");
+            })
+            .catch((error) => {
+              // An error occurred
+              // ...
+            });
+          // Navigate to the browser page
           console.log(user);
         })
         .catch((error) => {
@@ -86,6 +114,7 @@ const Login = () => {
             {/* Name field (only shown for Sign Up) */}
             {!isSignInForm && (
               <input
+                ref={name}
                 type="text"
                 placeholder="Name"
                 className={`py-3 px-2 m-2 w-full rounded text-white bg-black/60 border border-white transition-all duration-300 `}
