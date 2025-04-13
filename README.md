@@ -4,12 +4,14 @@
 
 - cdn tailwindcss
 - react-router-dom
-  -Header
-  -routing of app
-  -login form
-  -sign up form
-  -validation
+- Header
+- routing of app
+- login form
+- sign up form
+- validation
 - useRef hook
+- firebase setup
+- deploying our app to production
 
 # Features
 
