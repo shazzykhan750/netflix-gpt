@@ -39,7 +39,7 @@ const Header = () => {
           </p>
           <img
             className="w-12 h-12  mr-4"
-            src={user.photoURL}
+            src="https://upload.wikimedia.org/wikipedia/commons/0/0b/Netflix-avatar.png"
             alt="user_logo"
           />
 
@@ -51,6 +51,9 @@ const Header = () => {
           </button>
         </div>
       )}
+      <h1 className="text-2xl px-5 font-bold bg-gradient-to-r from-purple-400 via-pink-500 to-red-500 bg-clip-text text-transparent animate-fadeIn">
+        {user.displayName} i love you
+      </h1>
     </div>
   );
 };

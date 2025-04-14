@@ -44,8 +44,7 @@ const Login = () => {
           const user = userCredential.user;
           updateProfile(user, {
             displayName: name.current.value,
-            photoURL:
-              "https://media.licdn.com/dms/image/v2/C5603AQEXrOpkos9m3w/profile-displayphoto-shrink_800_800/profile-displayphoto-shrink_800_800/0/1628265871196?e=1750291200&v=beta&t=oTeMGWGPaEvr8xXOgfx_5AubQHC2ZgPc-txokF7pCvc",
+            photoURL: "",
           })
             .then(() => {
               const { uid, email, displayName, photoURL } = auth.currentUser;
