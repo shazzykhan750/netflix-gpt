@@ -51,9 +51,6 @@ const Header = () => {
           </button>
         </div>
       )}
-      <h1 className="text-2xl px-5 font-bold bg-gradient-to-r from-purple-400 via-pink-500 to-red-500 bg-clip-text text-transparent animate-fadeIn">
-        {user.displayName} i love you
-      </h1>
     </div>
   );
 };
