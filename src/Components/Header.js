@@ -1,9 +1,10 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { auth } from "../utils/firebase"; // Import the auth object from firebase.js
 import { useDispatch } from "react-redux";
-import { removerUser } from "../utils/userSlice";
+import { addUser, removerUser } from "../utils/userSlice";
+import { onAuthStateChanged } from "firebase/auth";
 
 const Header = () => {
   const navigate = useNavigate();
@@ -17,13 +18,40 @@ const Header = () => {
         // Sign-out successful.
         dispatch(removerUser()); // Remove user from the store
 
-        navigate("/"); // Navigate to the login page
+        // Navigate to the login page
       })
       .catch((error) => {
         // An error happened.
         console.error("Error signing out: ", error);
       });
   };
+  useEffect(() => {
+    const unsubscribe = onAuthStateChanged(auth, (user) => {
+      if (user) {
+        const { uid, email, displayName, photoURL } = auth.currentUser;
+
+        dispatch(
+          addUser({
+            uid: uid,
+            email: email,
+            displayName: displayName,
+            photoURL: photoURL,
+          }),
+          // Navigate to the browser page
+          navigate("/browser")
+        );
+
+        // Remove user from the store
+        // Navigate to the login page
+      } else {
+        dispatch(removerUser());
+        navigate("/");
+      }
+    });
+    return () => {
+      unsubscribe(); // Unsubscribe from the auth state listener when the component unmounts
+    };
+  }, []);
 
   return (
     <div className="absolute w-screen px-8 py-2 bg-gradient-to-b from-black  z-10 flex justify-between">

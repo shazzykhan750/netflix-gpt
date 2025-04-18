@@ -42,7 +42,7 @@ const Login = () => {
         .then((userCredential) => {
           // Signed in
           const user = userCredential.user;
-          console.log(user);
+
           updateProfile(user, {
             displayName: name.current.value,
             photoURL: "",
@@ -66,7 +66,6 @@ const Login = () => {
               // ...
             });
           // Navigate to the browser page
-          console.log(user);
         })
         .catch((error) => {
           const errorCode = error.code;
@@ -82,7 +81,7 @@ const Login = () => {
         .then((userCredential) => {
           // Signed in
           const user = userCredential.user;
-          console.log(user);
+
           navigate("/browser"); // Navigate to the browser page
           // ...
         })

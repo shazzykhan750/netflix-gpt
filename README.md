@@ -12,6 +12,17 @@
 - useRef hook
 - firebase setup
 - deploying our app to production
+  -create signup user account
+  -implement sign In user Api
+  -created redux store with userSlice
+  -implemented sign out
+  -update profile
+  -BugFix:sign up user displaName and profile picture update
+  -BugFix: if the user not logged in Redirect/browser to login page and vice-versa
+  - Unsubscribed to the onAuthStateChanged callBack -
+  - added hard codede values inside my constant
+    -registerd in TMDB and regersted the app and get the acces tokken
+    -get the movie list data from tmdb
 
 # Features
 
