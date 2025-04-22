@@ -5,7 +5,7 @@ import { useSelector } from "react-redux";
 
 const VideoBackground = ({ movieId }) => {
   const trailerVideo = useSelector((store) => store.movies?.movieTrailer);
-  console.log(trailerVideo);
+
   const { key } = trailerVideo || {}; // Destructure the key from trailerVideo object
 
   useMovieTrailer(movieId);

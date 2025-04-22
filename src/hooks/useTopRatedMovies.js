@@ -1,13 +1,13 @@
 import React, { useEffect } from "react";
 import { useDispatch } from "react-redux";
 import { API_OPTIONS } from "../utils/constatns";
-import { addNowPlayingMovies } from "../utils/movieSlice";
+import { addPopularMovies, addTopRatedMovies } from "../utils/movieSlice";
 
-const useNowPlayingMovies = () => {
+const useTopRatedMovies = () => {
   const dispatch = useDispatch();
-  const movieListFetch = async () => {
+  const topRatedMovieListFetch = async () => {
     const response = await fetch(
-      "https://api.themoviedb.org/3/movie/now_playing?language=en-US&page=1",
+      "https://api.themoviedb.org/3/movie/top_rated?language=en-US&page=1",
       API_OPTIONS
     );
     if (!response.ok) {
@@ -15,11 +15,11 @@ const useNowPlayingMovies = () => {
     }
     const data = await response.json();
 
-    dispatch(addNowPlayingMovies(data.results));
+    dispatch(addTopRatedMovies(data?.results));
   };
   useEffect(() => {
-    movieListFetch();
+    topRatedMovieListFetch();
   }, []);
 };
 
-export default useNowPlayingMovies;
+export default useTopRatedMovies;
