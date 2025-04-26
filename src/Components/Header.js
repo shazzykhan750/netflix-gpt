@@ -5,12 +5,16 @@ import { auth } from "../utils/firebase"; // Import the auth object from firebas
 import { useDispatch } from "react-redux";
 import { addUser, removerUser } from "../utils/userSlice";
 import { onAuthStateChanged } from "firebase/auth";
+import { toggeleGptSearch } from "../utils/gptSlice";
+import { SUPPORTDE_LANGUAGES } from "../utils/constatns";
+import { changeLanguage } from "../utils/confgSlice";
 
 const Header = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const user = useSelector((store) => store.user.user);
 
+  const showGptSearch = useSelector((store) => store.gpt.showGptSearch);
   const handleLogout = () => {
     auth
       .signOut()
@@ -53,6 +57,14 @@ const Header = () => {
     };
   }, []);
 
+  const handleGptSearchClick = () => {
+    dispatch(toggeleGptSearch());
+  };
+  const changeLanguages = (e) => {
+    const selectedLanguage = e.target.value;
+    dispatch(changeLanguage(selectedLanguage));
+  };
+
   return (
     <div className="absolute w-screen px-8 py-2 bg-gradient-to-b from-black  z-10 flex justify-between">
       <img
@@ -65,6 +77,26 @@ const Header = () => {
           <p className="text-2xl px-5 font-bold bg-gradient-to-r from-purple-400 via-pink-500 to-red-500 bg-clip-text text-transparent animate-fadeIn">
             {user.displayName}
           </p>
+          {showGptSearch && (
+            <select
+              name=""
+              id=""
+              className="p-2 m-2 bg-gray-800 text-white rounded-lg"
+              onChange={changeLanguages}
+            >
+              {SUPPORTDE_LANGUAGES.map((lang) => (
+                <option key={lang.code} value={lang.code}>
+                  {lang.name}
+                </option>
+              ))}
+            </select>
+          )}
+          <button
+            className="px-4 py-2 mx-4 bg-purple-800  my-2 text-white rounded-lg cursor-pointer"
+            onClick={handleGptSearchClick}
+          >
+            {showGptSearch ? "HomePage" : "GPT Search"}
+          </button>
           <img
             className="w-12 h-12  mr-4"
             src="https://upload.wikimedia.org/wikipedia/commons/0/0b/Netflix-avatar.png"
